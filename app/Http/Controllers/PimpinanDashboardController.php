@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aset;
+use Illuminate\Support\Facades\Auth;
+
 
 class PimpinanDashboardController extends Controller
 {
     public function index()
     {
-        // proteksi role pimpinan
-        if (auth()->user()->role !== 'user') {
-            abort(403);
-        }
+    if (Auth::user()->role !== 'user') {
+        abort(403);
+    }
 
         return view('user.dashboard', [
             'totalAset' => Aset::count(),
