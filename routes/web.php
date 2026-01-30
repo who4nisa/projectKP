@@ -3,31 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\PimpinanDashboardController;
 
-/*
-|--------------------------------------------------------------------------
-| AUTH ROUTE (LOGIN)
-|--------------------------------------------------------------------------
-*/
-
-// halaman login di /
-Route::get('/', [AuthController::class, 'showLogin'])
-    ->name('login');
-
-// proses login
+// LOGIN
+Route::get('/', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// logout
-Route::post('/logout', [AuthController::class, 'logout'])
-    ->name('logout');
-
-/*
-|--------------------------------------------------------------------------
-| PROTECTED ROUTE (HARUS LOGIN)
-|--------------------------------------------------------------------------
-*/
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])
-        ->name('dashboard');
+// DASHBOARD (WAJIB LOGIN)
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index']);
+    Route::get('/dashboard-user', [PimpinanDashboardController::class, 'index']);
 });

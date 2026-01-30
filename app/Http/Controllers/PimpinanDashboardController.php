@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Aset;
 
-class AdminDashboardController extends Controller
+class PimpinanDashboardController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role !== 'admin') {
-        abort(403);
+        // proteksi role pimpinan
+        if (auth()->user()->role !== 'user') {
+            abort(403);
         }
-        return view('admin.dashboard', [
+
+        return view('user.dashboard', [
             'totalAset' => Aset::count(),
             'asetBaik'  => Aset::where('kondisi', 'Baik')->count(),
             'asetRusak' => Aset::whereIn('kondisi', ['Rusak Ringan', 'Rusak Berat'])->count(),
