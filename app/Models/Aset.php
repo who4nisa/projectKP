@@ -14,10 +14,9 @@ class Aset extends Model
     protected $fillable = [
         'kode_aset',
         'nama_aset',
-        'kategori_id',
-        'lokasi_id',
+        'kategori',  
+        'lokasi',    
         'jumlah',
         'kondisi'
     ];
 }
-

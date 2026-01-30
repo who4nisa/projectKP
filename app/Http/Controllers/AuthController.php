@@ -22,15 +22,15 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // redirect berdasarkan role
-            if (Auth::user()->role === 'admin') {
-                return redirect('/dashboard');
-            }
+            $user = Auth::user();
 
-            if (Auth::user()->role === 'user') {
-                return redirect('/dashboard-user');
-            }
+            return match ($user->role) {
+                'admin' => redirect()->intended('/dashboard'),
+                'user'  => redirect()->intended('/dashboard-user'),
+                default => redirect('/'),
+            };
         }
+
 
         return back()->withErrors([
             'email' => 'Email atau password salah.',

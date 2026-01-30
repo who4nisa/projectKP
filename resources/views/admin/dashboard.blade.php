@@ -11,10 +11,10 @@
     <div class="container-fluid">
         <span class="navbar-brand">Dashboard Admin</span>
 
-        <form action="/logout" method="POST">
-            @csrf
-            <button class="btn btn-light btn-sm">Logout</button>
-        </form>
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button class="btn btn-light btn-sm">Logout</button>
+    </form>
     </div>
 </nav>
 
